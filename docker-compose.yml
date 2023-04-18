@@ -1,0 +1,52 @@
+version: '3.7'
+services:
+  store-api:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: store-api
+    ports:
+      - "8080:8080"
+    links:
+      - keycloak
+    depends_on:
+      - keycloak
+  keycloak:
+    image: jboss/keycloak
+    container_name: keycloak
+    restart: always
+    environment:
+      DB_VENDOR: POSTGRES
+      DB_ADDR: postgres-keycloak
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_SCHEMA: public
+      DB_PASSWORD: password
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: password
+      PROXY_ADDRESS_FORWARDING: "true"
+      OAUTH2_ISSUER: http://localhost:8081/auth/realms/SpringBootKeycloak
+    volumes:
+      - keycloak:/var/lib/keycloak/data
+    ports:
+      - "8081:8081"
+    command:
+      - "-b 0.0.0.0"
+      - "-Djboss.http.port=8081"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  postgres-keycloak:
+    image: postgres:14.1-alpine
+    container_name: postgres-keycloak
+    volumes:
+      - pgdata-keycloak:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: password
+volumes:
+  keycloak:
+  pgdata-keycloak:
+    driver: local
+
