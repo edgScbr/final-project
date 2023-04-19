@@ -1,18 +1,8 @@
 version: '3.7'
 services:
-  store-api:
-    build:
-      context: ./
-      dockerfile: Dockerfile
-    container_name: store-api
-    ports:
-      - "8080:8080"
-    links:
-      - keycloak
-    depends_on:
-      - keycloak
   keycloak:
     image: jboss/keycloak
+    hostname: keycloak
     container_name: keycloak
     restart: always
     environment:
