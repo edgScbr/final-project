@@ -23,10 +23,13 @@ public class Order {
     @JoinColumn(name = "user_id", nullable = false)
     private UserModel user;
     @ManyToOne
-    @JoinColumn(name = "address_id", nullable = false)
+    @JoinColumn(name = "address_id")
     private Address deliveryAddress;
     private OrderStatus status;
     private DeliveryStatus deliveryStatus;
     @OneToMany(mappedBy = "order")
     private Set<Item> items;
+    @ManyToOne
+    @JoinColumn(name = "payment_method_id")
+    private PaymentMethod paymentMethod;
 }

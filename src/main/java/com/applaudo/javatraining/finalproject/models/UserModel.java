@@ -17,14 +17,19 @@ public class UserModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
-    private long id;
+    private Long id;
     private String firstName;
     private String lastName;
     private String email;
     @OneToMany(mappedBy = "userModel", fetch = FetchType.EAGER)
     private Set<Address> addresses;
-
-    //private Set<PaymentMethod> paymentMethods;
+    @ManyToMany
+    @JoinTable(
+            name = "users_payment_methods",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "payment_method_id")
+    )
+    private Set<PaymentMethod> paymentMethods;
 
 
 }

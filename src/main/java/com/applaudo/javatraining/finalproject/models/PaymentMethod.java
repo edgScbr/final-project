@@ -1,27 +1,24 @@
 package com.applaudo.javatraining.finalproject.models;
 
+import com.applaudo.javatraining.finalproject.models.enums.PaymentOption;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Set;
+
 @AllArgsConstructor
 @Setter
 @Getter
-@Table(name = "addresses")
+@Table(name = "payment_methods")
 @Entity
-public class Address {
+public class PaymentMethod {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
     private Long id;
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private UserModel userModel;
-    private Integer streetNumber;
-    private String streetName;
-    private String city;
-    private String state;
-    private Integer zip;
+    @Enumerated(EnumType.ORDINAL)
+    private PaymentOption paymentOption;
 
 }
