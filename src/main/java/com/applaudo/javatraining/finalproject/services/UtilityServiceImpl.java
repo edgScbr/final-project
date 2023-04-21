@@ -15,7 +15,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 @RequiredArgsConstructor
 @Service
@@ -72,14 +74,15 @@ public class UtilityServiceImpl implements UtilityService {
     }
 
     @Override
-    public Optional<Item> verifyItemAlreadyAdded(Product product, Order order) {
+    public Optional<Item> verifyItemAlreadyAdded(Long productId, Order order) {
         Optional<Item> optionalItem = Optional.empty();
         for (Item added : order.getItems()) {
-            if ((product.equals(added.getProduct()))) {
+            if (Objects.equals(productId, added.getProduct().getId())) {
                 optionalItem = Optional.of(added);
                 break;
             }
         }
         return optionalItem;
     }
+
 }

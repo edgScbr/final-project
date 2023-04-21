@@ -4,6 +4,7 @@ import com.applaudo.javatraining.finalproject.controllers.requests.OrderRequest;
 import com.applaudo.javatraining.finalproject.controllers.responses.OrderResponse;
 import com.applaudo.javatraining.finalproject.services.interfaces.AddItemService;
 import com.applaudo.javatraining.finalproject.services.interfaces.CreateOrderService;
+import com.applaudo.javatraining.finalproject.services.interfaces.RemoveItemService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,8 @@ public class OrderController {
 
     private final AddItemService addItemService;
 
+    private final RemoveItemService removeItemService;
+
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
     public OrderResponse createOrder(@RequestBody @Valid OrderRequest request, Principal principal ) {
@@ -33,8 +36,14 @@ public class OrderController {
         return createOrderService.getOrderById(id);
     }
 
-    @PostMapping("/addItem")
+    @PostMapping("/addProduct")
     public OrderResponse addItem(@RequestBody @Valid OrderRequest request, Principal principal) {
         return addItemService.addItems(principal.getName(), request);
+    }
+
+    @DeleteMapping("/deleteProduct/{productId}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public void deleteItem(@PathVariable Long productId, Principal principal) {
+        removeItemService.removeItem(principal.getName(), productId);
     }
 }

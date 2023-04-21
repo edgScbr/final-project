@@ -8,6 +8,7 @@ import com.applaudo.javatraining.finalproject.models.Product;
 import com.applaudo.javatraining.finalproject.models.enums.OrderStatus;
 
 import java.util.Optional;
+import java.util.Set;
 
 public interface UtilityService {
 
@@ -19,5 +20,6 @@ public interface UtilityService {
 
     public Optional<Order> getOrderByUserNameAndStatus(String userName, OrderStatus status);
 
-    public Optional<Item> verifyItemAlreadyAdded(Product product, Order order);
+    public Optional<Item> verifyItemAlreadyAdded(Long productId, Order order);
+
 }

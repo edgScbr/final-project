@@ -12,6 +12,7 @@ import com.applaudo.javatraining.finalproject.models.enums.OrderStatus;
 import com.applaudo.javatraining.finalproject.repositories.ItemRepository;
 import com.applaudo.javatraining.finalproject.repositories.OrderRepository;
 import com.applaudo.javatraining.finalproject.services.interfaces.CreateOrderService;
+import com.applaudo.javatraining.finalproject.services.interfaces.UtilityService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,7 +26,7 @@ import java.util.Optional;
 public class CreateOrderServiceImpl implements CreateOrderService {
 
     private final OrderRepository orderRepository;
-    private final UtilityServiceImpl utilityServiceImpl;
+    private final UtilityService utilityService;
     private final ItemRepository itemRepository;
     private final OrderMapper orderMapper;
 
@@ -33,15 +34,15 @@ public class CreateOrderServiceImpl implements CreateOrderService {
     @Override
     @Transactional
     public OrderResponse createOrder(String userName, OrderRequest request) {
-        Customer customer = utilityServiceImpl.findCustomer(userName);
-        Optional<Order> optOrder = utilityServiceImpl.getOrderByUserNameAndStatus(
+        Customer customer = utilityService.findCustomer(userName);
+        Optional<Order> optOrder = utilityService.getOrderByUserNameAndStatus(
                 customer.getUserName(), OrderStatus.CHECKOUT);
         if (optOrder.isPresent()) {
             throw new ResponseStatusException(
                     HttpStatus.UNPROCESSABLE_ENTITY, "checkout already exists for user: " + userName);
         } else {
 
-            Product product = utilityServiceImpl.findProduct(request);
+            Product product = utilityService.findProduct(request);
 
             //Order
             Order order = new Order();
