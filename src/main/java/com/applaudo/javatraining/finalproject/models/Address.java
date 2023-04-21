@@ -16,8 +16,8 @@ public class Address {
     @Column(unique = true, nullable = false)
     private Long id;
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private UserModel userModel;
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
     private Integer streetNumber;
     private String streetName;
     private String city;

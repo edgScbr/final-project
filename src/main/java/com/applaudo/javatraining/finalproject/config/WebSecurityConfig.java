@@ -21,7 +21,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests()
                 .requestMatchers(HttpMethod.GET, "/actuator/health", "actuator/health/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/store").hasRole(USER)
+                .requestMatchers(HttpMethod.GET, "/store/**").hasRole(USER)
                 .requestMatchers(HttpMethod.GET, "/actuator/metrics/", "/actuator/metrics/**").hasRole(USER)
                 .requestMatchers(HttpMethod.GET, "/actuator/loggers/", "/actuator/loggers/**").hasRole(USER)
                 .anyRequest().authenticated();
