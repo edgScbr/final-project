@@ -2,6 +2,7 @@ package com.applaudo.javatraining.finalproject.controllers;
 
 import com.applaudo.javatraining.finalproject.controllers.requests.OrderRequest;
 import com.applaudo.javatraining.finalproject.controllers.responses.OrderResponse;
+import com.applaudo.javatraining.finalproject.services.interfaces.AddItemService;
 import com.applaudo.javatraining.finalproject.services.interfaces.CreateOrderService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,8 @@ public class OrderController {
 
     private final CreateOrderService createOrderService;
 
+    private final AddItemService addItemService;
+
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
     public OrderResponse createOrder(@RequestBody @Valid OrderRequest request, Principal principal ) {
@@ -28,5 +31,10 @@ public class OrderController {
     @GetMapping("{id}")
     public OrderResponse getOrderById(@PathVariable Long id) {
         return createOrderService.getOrderById(id);
+    }
+
+    @PostMapping("/addItem")
+    public OrderResponse addItem(@RequestBody @Valid OrderRequest request, Principal principal) {
+        return addItemService.addItems(principal.getName(), request);
     }
 }
