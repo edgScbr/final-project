@@ -7,11 +7,11 @@ import lombok.Getter;
 @Getter
 public class OrderRequest {
 
-    @NotNull
-    @Positive
+    @NotNull(message = "product id cannot be null")
+    @Positive(message = "product id must be a positive number")
     private Long productId;
 
-    @NotNull
-    @Positive
+    @NotNull(message = "quantity cannot be null")
+    @Positive(message = "quantity must be a positive number")
     private Integer quantity;
 }
