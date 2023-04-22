@@ -5,7 +5,6 @@ import com.applaudo.javatraining.finalproject.models.Order;
 import com.applaudo.javatraining.finalproject.models.enums.OrderStatus;
 import com.applaudo.javatraining.finalproject.repositories.ItemRepository;
 import com.applaudo.javatraining.finalproject.repositories.OrderRepository;
-import com.applaudo.javatraining.finalproject.repositories.ProductRepository;
 import com.applaudo.javatraining.finalproject.services.interfaces.RemoveItemService;
 import com.applaudo.javatraining.finalproject.services.interfaces.UtilityService;
 import lombok.RequiredArgsConstructor;

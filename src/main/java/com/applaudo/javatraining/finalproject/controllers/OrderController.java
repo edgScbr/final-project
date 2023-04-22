@@ -1,7 +1,9 @@
 package com.applaudo.javatraining.finalproject.controllers;
 
+import com.applaudo.javatraining.finalproject.controllers.requests.AddressRequest;
 import com.applaudo.javatraining.finalproject.controllers.requests.OrderRequest;
 import com.applaudo.javatraining.finalproject.controllers.responses.OrderResponse;
+import com.applaudo.javatraining.finalproject.services.interfaces.AddAddressService;
 import com.applaudo.javatraining.finalproject.services.interfaces.AddItemService;
 import com.applaudo.javatraining.finalproject.services.interfaces.CreateOrderService;
 import com.applaudo.javatraining.finalproject.services.interfaces.RemoveItemService;
@@ -25,6 +27,8 @@ public class OrderController {
 
     private final RemoveItemService removeItemService;
 
+    private final AddAddressService addAddressService;
+
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
     public OrderResponse createOrder(@RequestBody @Valid OrderRequest request, Principal principal ) {
@@ -36,14 +40,19 @@ public class OrderController {
         return createOrderService.getOrderById(id);
     }
 
-    @PostMapping("/addProduct")
+    @PostMapping("addProduct")
     public OrderResponse addItem(@RequestBody @Valid OrderRequest request, Principal principal) {
         return addItemService.addItems(principal.getName(), request);
     }
 
-    @DeleteMapping("/deleteProduct/{productId}")
+    @DeleteMapping("deleteProduct/{productId}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void deleteItem(@PathVariable Long productId, Principal principal) {
         removeItemService.removeItem(principal.getName(), productId);
+    }
+
+    @PatchMapping("addAddress")
+    public OrderResponse addAddress(@RequestBody @Valid AddressRequest addressRequest, Principal principal) {
+        return addAddressService.addAddressToOrder(principal.getName(), addressRequest);
     }
 }

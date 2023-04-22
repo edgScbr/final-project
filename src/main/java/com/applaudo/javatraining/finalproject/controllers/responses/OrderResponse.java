@@ -1,5 +1,6 @@
 package com.applaudo.javatraining.finalproject.controllers.responses;
 
+import com.applaudo.javatraining.finalproject.controllers.requests.AddressRequest;
 import com.applaudo.javatraining.finalproject.models.Address;
 import com.applaudo.javatraining.finalproject.models.Customer;
 import com.applaudo.javatraining.finalproject.models.Item;
@@ -17,7 +18,7 @@ public class OrderResponse {
 
     private Long id;
     private CustomerResponse customer;
-    private Address deliveryAddress;
+    private AddressResponse deliveryAddress;
     private OrderStatus status;
     private DeliveryStatus deliveryStatus;
     private Set<ItemResponse> items;
