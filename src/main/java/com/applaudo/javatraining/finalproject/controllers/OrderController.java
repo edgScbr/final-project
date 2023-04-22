@@ -2,11 +2,9 @@ package com.applaudo.javatraining.finalproject.controllers;
 
 import com.applaudo.javatraining.finalproject.controllers.requests.AddressRequest;
 import com.applaudo.javatraining.finalproject.controllers.requests.OrderRequest;
+import com.applaudo.javatraining.finalproject.controllers.requests.PaymentMethodRequest;
 import com.applaudo.javatraining.finalproject.controllers.responses.OrderResponse;
-import com.applaudo.javatraining.finalproject.services.interfaces.AddAddressService;
-import com.applaudo.javatraining.finalproject.services.interfaces.AddItemService;
-import com.applaudo.javatraining.finalproject.services.interfaces.CreateOrderService;
-import com.applaudo.javatraining.finalproject.services.interfaces.RemoveItemService;
+import com.applaudo.javatraining.finalproject.services.interfaces.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +26,8 @@ public class OrderController {
     private final RemoveItemService removeItemService;
 
     private final AddAddressService addAddressService;
+
+    private final PaymentMethodService paymentMethodService;
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
@@ -54,5 +54,10 @@ public class OrderController {
     @PatchMapping("addAddress")
     public OrderResponse addAddress(@RequestBody @Valid AddressRequest addressRequest, Principal principal) {
         return addAddressService.addAddressToOrder(principal.getName(), addressRequest);
+    }
+
+    @PatchMapping("addPaymentMethod")
+    public OrderResponse addPaymentMethod(@RequestBody PaymentMethodRequest request, Principal principal) {
+        return paymentMethodService.addPaymentMethodToOrder(principal.getName(), request);
     }
 }

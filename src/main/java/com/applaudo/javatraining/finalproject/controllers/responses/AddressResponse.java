@@ -1,8 +1,5 @@
 package com.applaudo.javatraining.finalproject.controllers.responses;
 
-import com.applaudo.javatraining.finalproject.models.Customer;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 

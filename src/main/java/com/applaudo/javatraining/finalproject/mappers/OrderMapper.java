@@ -10,7 +10,7 @@ import org.mapstruct.Named;
 
 @Mapper(componentModel = "spring",
         injectionStrategy = InjectionStrategy.CONSTRUCTOR,
-        uses = {CustomerMapper.class, ItemMapper.class, AddressMapper.class})
+        uses = {CustomerMapper.class, ItemMapper.class, AddressMapper.class, PaymentMethodMapper.class})
 public interface OrderMapper {
 
     @Mapping(source = "order", target = "total", qualifiedByName = "orderTotal")
