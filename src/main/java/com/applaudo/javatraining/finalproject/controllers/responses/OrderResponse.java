@@ -7,13 +7,15 @@ import com.applaudo.javatraining.finalproject.models.Item;
 import com.applaudo.javatraining.finalproject.models.PaymentMethod;
 import com.applaudo.javatraining.finalproject.models.enums.DeliveryStatus;
 import com.applaudo.javatraining.finalproject.models.enums.OrderStatus;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Set;
 
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class OrderResponse {
 
     private Long id;
