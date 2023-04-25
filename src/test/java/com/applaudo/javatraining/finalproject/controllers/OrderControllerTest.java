@@ -1,5 +1,6 @@
-package com.applaudo.javatraining.finalproject;
+package com.applaudo.javatraining.finalproject.controllers;
 
+import com.applaudo.javatraining.finalproject.TestUtilities;
 import com.applaudo.javatraining.finalproject.controllers.OrderController;
 import com.applaudo.javatraining.finalproject.controllers.requests.AddressRequest;
 import com.applaudo.javatraining.finalproject.controllers.requests.OrderRequest;
