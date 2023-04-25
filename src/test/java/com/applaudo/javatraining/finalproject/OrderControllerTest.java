@@ -1,6 +1,7 @@
 package com.applaudo.javatraining.finalproject;
 
 import com.applaudo.javatraining.finalproject.controllers.OrderController;
+import com.applaudo.javatraining.finalproject.controllers.requests.AddressRequest;
 import com.applaudo.javatraining.finalproject.controllers.requests.OrderRequest;
 import com.applaudo.javatraining.finalproject.services.interfaces.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,6 +23,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -35,14 +37,9 @@ public class OrderControllerTest extends TestUtilities {
     private OrderController orderController;
     @Autowired
     private MockMvc mockMvc;
-
-
     @MockBean
     CreateOrderService createOrderService;
-    @MockBean
-    AddItemService addItemService;
-    @MockBean
-    RemoveItemService removeItemService;
+
     @MockBean
     AddAddressService addAddressService;
     @MockBean
@@ -79,6 +76,41 @@ public class OrderControllerTest extends TestUtilities {
         mockMvc.perform(post("/store/orders").contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(invalidOrderRequest)))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void givenAddressRequest_whenPatchOrder_thenReturnUpdatedOrder() throws Exception {
+
+        given(addAddressService.addAddressToOrder(anyString(), any())).willReturn(orderResponse);
+
+        mockMvc.perform(patch("/store/orders/addAddress").contentType(MediaType.APPLICATION_JSON)
+                        .principal(mockPrincipal)
+                        .content(new ObjectMapper().writeValueAsString(addressRequest))
+                        .characterEncoding("utf-8"))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void givenInvalidAddressRequest_whenPatchOrder_thenThrowException() throws Exception {
+        AddressRequest invalidAddressRequest = new AddressRequest(null);
+
+        mockMvc.perform(patch("/store/orders/addAddress").contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(invalidAddressRequest)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void givenPaymentMethodRequest_whenPatchOrder_thenReturnUpdatedOrder() throws Exception {
+
+        given(paymentMethodService.addPaymentMethodToOrder(anyString(), any())).willReturn(orderResponse);
+
+        mockMvc.perform(patch("/store/orders/addPaymentMethod").contentType(MediaType.APPLICATION_JSON)
+                        .principal(mockPrincipal)
+                        .content(new ObjectMapper().writeValueAsString(paymentMethodRequest))
+                        .characterEncoding("utf-8"))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk());
     }
 
 }

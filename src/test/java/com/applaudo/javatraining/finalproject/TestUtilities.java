@@ -5,6 +5,8 @@ import com.applaudo.javatraining.finalproject.controllers.requests.AddressReques
 import com.applaudo.javatraining.finalproject.controllers.requests.OrderRequest;
 import com.applaudo.javatraining.finalproject.controllers.requests.PaymentMethodRequest;
 import com.applaudo.javatraining.finalproject.controllers.responses.*;
+import com.applaudo.javatraining.finalproject.models.Address;
+import com.applaudo.javatraining.finalproject.models.Customer;
 import com.applaudo.javatraining.finalproject.models.PaymentMethod;
 import com.applaudo.javatraining.finalproject.models.enums.DeliveryStatus;
 import com.applaudo.javatraining.finalproject.models.enums.OrderStatus;
@@ -23,7 +25,8 @@ public class TestUtilities {
     OrderRequest orderRequest = new OrderRequest(
             getRandomLongRange(), 3);
 
-    AddressRequest addressRequest = new AddressRequest(getRandomLongRange());
+
+
     AddressResponse addressResponse = AddressResponse.builder()
             .id(getRandomLongRange())
             .streetNumber(1)
@@ -74,6 +77,12 @@ public class TestUtilities {
             .items(itemResponseSet)
             .paymentMethod(paymentMethod)
             .build();
+
+    Address addressModel =
+            new Address(1L, new Customer(), 1, "Main st",
+                    "Los Gatos", "CA", 12345);
+
+    AddressRequest addressRequest = new AddressRequest(1L);
 
 
     private Long getRandomLongRange() {

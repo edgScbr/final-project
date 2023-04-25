@@ -21,10 +21,6 @@ public class OrderController {
 
     private final CreateOrderService createOrderService;
 
-    private final AddItemService addItemService;
-
-    private final RemoveItemService removeItemService;
-
     private final AddAddressService addAddressService;
 
     private final PaymentMethodService paymentMethodService;
@@ -38,17 +34,6 @@ public class OrderController {
     @GetMapping("{id}")
     public OrderResponse getOrderById(@PathVariable Long id) {
         return createOrderService.getOrderById(id);
-    }
-
-    @PostMapping("addProduct")
-    public OrderResponse addItem(@RequestBody @Valid OrderRequest request, Principal principal) {
-        return addItemService.addItems(principal.getName(), request);
-    }
-
-    @DeleteMapping("deleteProduct/{productId}")
-    @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    public void deleteItem(@PathVariable Long productId, Principal principal) {
-        removeItemService.removeItem(principal.getName(), productId);
     }
 
     @PatchMapping("addAddress")

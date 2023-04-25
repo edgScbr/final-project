@@ -13,7 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
-@Profile(value = {"development", "production"})
+@Profile(value = {"development", "production", "default"})
 public class WebSecurityConfig {
 
     public static final String USER = "user";
