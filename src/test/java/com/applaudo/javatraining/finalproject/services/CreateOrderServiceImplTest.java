@@ -9,13 +9,12 @@ import com.applaudo.javatraining.finalproject.repositories.ItemRepository;
 import com.applaudo.javatraining.finalproject.repositories.OrderRepository;
 import com.applaudo.javatraining.finalproject.services.interfaces.CreateOrderService;
 import com.applaudo.javatraining.finalproject.services.interfaces.UtilityService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.security.Principal;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -34,8 +33,6 @@ public class CreateOrderServiceImplTest extends TestUtilities {
     private final OrderMapper orderMapper = mock(OrderMapper.class);
 
     CreateOrderService createOrderService;
-
-    Principal mockPrincipal;
 
     @BeforeEach
     void init() {
