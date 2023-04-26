@@ -3,7 +3,6 @@ package com.applaudo.javatraining.finalproject.controllers.responses;
 import lombok.*;
 
 @Getter
-@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

@@ -39,8 +39,8 @@ public class TestUtilities {
 
     public CustomerResponse customerResponse = CustomerResponse.builder()
             .id(getRandomLongRange())
-            .FirstName("John")
-            .LastName("Doe")
+            .firstName("John")
+            .lastName("Doe")
             .userName("user1")
             .email("jd@gmail.com")
             .build();

@@ -25,15 +25,17 @@ public class OrderController {
 
     private final PaymentMethodService paymentMethodService;
 
+    private final PurchaseService purchaseService;
+
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
-    public OrderResponse createOrder(@RequestBody @Valid OrderRequest request, Principal principal ) {
+    public OrderResponse createOrder(@RequestBody @Valid OrderRequest request, Principal principal) {
         return createOrderService.createOrder(principal.getName(), request);
     }
 
     @GetMapping("{id}")
-    public OrderResponse getOrderById(@PathVariable Long id) {
-        return createOrderService.getOrderById(id);
+    public OrderResponse getOrderById(@PathVariable Long id, Principal principal) {
+        return createOrderService.getOrderById(id, principal.getName());
     }
 
     @PatchMapping("addAddress")
@@ -44,5 +46,10 @@ public class OrderController {
     @PatchMapping("addPaymentMethod")
     public OrderResponse addPaymentMethod(@RequestBody PaymentMethodRequest request, Principal principal) {
         return paymentMethodService.addPaymentMethodToOrder(principal.getName(), request);
+    }
+
+    @PatchMapping("purchase")
+    public OrderResponse proceedToPurchase(Principal principal) {
+        return purchaseService.proceedToPurchase(principal.getName());
     }
 }

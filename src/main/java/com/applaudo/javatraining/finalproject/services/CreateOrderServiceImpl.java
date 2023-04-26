@@ -63,10 +63,20 @@ public class CreateOrderServiceImpl implements CreateOrderService {
     }
 
     @Override
-    public OrderResponse getOrderById(Long id) {
+    public OrderResponse getOrderById(Long id, String userName) {
         Optional<Order> optionalOrder = orderRepository.findById(id);
-        return optionalOrder.map(orderMapper::orderToOrderResponse).orElse(null);
-
+        if (optionalOrder.isPresent()) {
+            Order order = optionalOrder.get();
+            if (order.getCustomer().getUserName().equals(userName)) {
+                return orderMapper.orderToOrderResponse(order);
+            } else {
+                throw new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST, "order does not exists for user: " + userName);
+            }
+        } else {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "checkout not found with id: " + id);
+        }
     }
 
 

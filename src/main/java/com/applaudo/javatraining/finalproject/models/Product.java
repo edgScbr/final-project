@@ -10,7 +10,6 @@ import java.io.Serializable;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
 @Getter
 @Table(name = "products")
 @Entity
@@ -22,6 +21,7 @@ public class Product implements Serializable {
     private String name;
     private String description;
     private Double price;
+    @Setter
     private Integer stock;
 
 }

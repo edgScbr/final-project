@@ -7,6 +7,6 @@ public interface CreateOrderService {
 
     OrderResponse createOrder(String userName, OrderRequest request);
 
-    OrderResponse getOrderById(Long id);
+    OrderResponse getOrderById(Long id, String userName);
 
 }

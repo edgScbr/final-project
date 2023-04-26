@@ -11,7 +11,6 @@ import java.io.Serializable;
 import java.util.Set;
 
 @AllArgsConstructor
-@Setter
 @Getter
 @Table(name = "customers")
 @Entity
@@ -26,8 +25,12 @@ public class Customer implements Serializable {
     @Column(unique = true, nullable = false)
     private String userName;
     private String email;
+
+    @Setter
     @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
     private Set<Address> addresses;
+
+    @Setter
     @ManyToMany
     @JoinTable(
             name = "customers_payment_methods",

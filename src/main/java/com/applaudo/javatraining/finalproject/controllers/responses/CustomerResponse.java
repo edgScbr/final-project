@@ -10,8 +10,8 @@ import lombok.*;
 public class CustomerResponse {
 
     private Long id;
-    private String FirstName;
-    private String LastName;
+    private String firstName;
+    private String lastName;
     private String userName;
     private String email;
 }

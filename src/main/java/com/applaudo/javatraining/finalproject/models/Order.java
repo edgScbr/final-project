@@ -36,9 +36,4 @@ public class Order implements Serializable {
     @ManyToOne
     @JoinColumn(name = "payment_method_id")
     private PaymentMethod paymentMethod;
-
-    public void addToOrder(Item item){
-        item.setOrder(this);
-        this.items.add(item);
-    }
 }

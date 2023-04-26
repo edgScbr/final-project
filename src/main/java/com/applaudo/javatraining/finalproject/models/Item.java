@@ -11,7 +11,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
-@Getter
+
 @Table(name = "items")
 @Entity
 
@@ -29,4 +29,11 @@ public class Item implements Serializable {
     private Order order;
     private Integer quantity;
 
+    public Product getProduct() {
+        return product;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
 }

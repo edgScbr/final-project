@@ -46,7 +46,8 @@ public class OrderControllerTest extends TestUtilities {
     @MockBean
     PaymentMethodService paymentMethodService;
 
-    //
+    @MockBean
+    PurchaseService purchaseService;
 
     Principal mockPrincipal;
 
