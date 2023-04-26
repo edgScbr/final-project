@@ -6,7 +6,7 @@ import com.applaudo.javatraining.finalproject.mappers.OrderMapper;
 import com.applaudo.javatraining.finalproject.models.Customer;
 import com.applaudo.javatraining.finalproject.models.Order;
 import com.applaudo.javatraining.finalproject.repositories.OrderRepository;
-import com.applaudo.javatraining.finalproject.services.interfaces.AddAddressService;
+import com.applaudo.javatraining.finalproject.services.interfaces.PaymentMethodService;
 import com.applaudo.javatraining.finalproject.services.interfaces.UtilityService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,59 +22,58 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-public class AddAddressServiceImplTest extends TestUtilities {
+public class PaymentMethodServiceImplTest extends TestUtilities {
 
-    AddAddressService addAddressService;
-
-
+    PaymentMethodService paymentMethodService;
     UtilityService utilityService = mock(UtilityService.class);
     OrderMapper orderMapper = mock(OrderMapper.class);
     OrderRepository orderRepository = mock(OrderRepository.class);
 
     @BeforeEach
     void init() {
-        addAddressService = new AddAddressServiceImpl(
+        paymentMethodService = new PaymentMethodServiceImpl(
                 this.utilityService,
                 this.orderMapper,
                 this.orderRepository);
     }
 
     @Test
-    public void givenAddressRequest_whenAddAddress_thenReturnOrderResponse() throws Exception {
+    public void givenPaymentMethodRequest_whenAddPaymentMethodToOrder_thenReturnOrderResponse() throws Exception {
         given(utilityService.getOrderByUserNameAndStatus(anyString(), any())).willReturn(Optional.of(orderModel));
         given(orderRepository.save(any())).willReturn(orderModel);
         given(orderMapper.orderToOrderResponse(any())).willReturn(orderResponse);
 
-        OrderResponse response = addAddressService.addAddressToOrder(customerModel.getUserName(), addressRequest);
+        OrderResponse response = paymentMethodService.
+                addPaymentMethodToOrder(customerModel.getUserName(), paymentMethodRequest);
 
         assertThat(response).isNotNull();
-        assertThat(response.getDeliveryAddress()).isSameAs(addressResponse);
+        assertThat(response.getPaymentMethod()).isSameAs(paymentMethod);
     }
 
     @Test
-    public void givenInvalidAddress_whenAddAddress_thenReturnException() throws Exception {
-        Customer withNoAddress = customerModel;
-        withNoAddress.setAddresses(new HashSet<>());
+    public void givenInvalidPaymentMethod_whenAddPaymentMethodToOrder_thenReturnException() throws Exception {
+        Customer invalidPaymentMethod = customerModel;
+        invalidPaymentMethod.setPaymentMethods(new HashSet<>());
         Order order = orderModel;
-        order.setCustomer(withNoAddress);
+        order.setCustomer(invalidPaymentMethod);
 
         given(utilityService.getOrderByUserNameAndStatus(anyString(), any())).willReturn(Optional.of(order));
 
         Assertions.assertThrows(ResponseStatusException.class,
                 () -> {
-                    OrderResponse response = addAddressService
-                            .addAddressToOrder(withNoAddress.getUserName(), addressRequest);
+                    OrderResponse response = paymentMethodService
+                            .addPaymentMethodToOrder(invalidPaymentMethod.getUserName(), paymentMethodRequest);
                 });
     }
 
     @Test
-    public void givenNoCheckout_whenAddAddress_thenReturnException() throws Exception {
+    public void givenNoCheckout_whenAddPaymentMethodToOrder_thenReturnException() throws Exception {
         given(utilityService.getOrderByUserNameAndStatus(anyString(), any())).willReturn(Optional.empty());
 
         Assertions.assertThrows(ResponseStatusException.class,
                 () -> {
-                    OrderResponse response = addAddressService
-                            .addAddressToOrder(customerModel.getUserName(), addressRequest);
+                    OrderResponse response = paymentMethodService
+                            .addPaymentMethodToOrder(customerModel.getUserName(), paymentMethodRequest);
                 });
     }
 }
