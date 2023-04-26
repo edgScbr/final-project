@@ -34,7 +34,7 @@ public class RemoveItemServiceImpl implements RemoveItemService {
             Optional<Item> optItem = utilityService.verifyItemAlreadyAdded(productId, order);
             if (optItem.isPresent()) {
                 Item item = optItem.get();
-                itemRepository.delete(optItem.get());
+                itemRepository.delete(item);
                 order.getItems().remove(item);
                 if (order.getItems().isEmpty()) {
                     order.setStatus(OrderStatus.CANCELED);
