@@ -61,7 +61,7 @@ public class PaymentMethodServiceImplTest extends UtilitiesTest {
 
         Assertions.assertThrows(ResponseStatusException.class,
                 () -> {
-                    OrderResponse response = paymentMethodService
+                    paymentMethodService
                             .addPaymentMethodToOrder(invalidPaymentMethod.getUserName(), paymentMethodRequest);
                 });
     }
