@@ -18,8 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -72,5 +71,41 @@ public class CreateOrderServiceImplTest extends UtilitiesTest {
                     OrderResponse response = createOrderService.createOrder(customerModel.getUserName(), orderRequest);
                 });
         Mockito.verify(orderRepository, never()).save(any(Order.class));
+    }
+
+    @Test
+    public void givenId_whenGetOrderById_thenReturnOrder() throws Exception {
+        given(orderRepository.findById(anyLong())).willReturn(Optional.of(orderModel));
+        given(orderMapper.orderToOrderResponse(any())).willReturn(orderResponse);
+
+        OrderResponse response = createOrderService.getOrderById(orderModel.getId(),
+                orderModel.getCustomer().getUserName());
+
+        assertThat(response).isNotNull();
+        assertThat(response.getCustomer().getId()).isSameAs(orderModel.getCustomer().getId());
+        assertThat(response.getCustomer().getFirstName()).isSameAs(orderModel.getCustomer().getFirstName());
+        assertThat(response.getCustomer().getLastName()).isSameAs(orderModel.getCustomer().getLastName());
+        assertThat(response.getStatus()).isSameAs(orderModel.getStatus());
+    }
+
+    @Test
+    public void givenNonExistingId_whenGetOrderById_thenReturnException() throws Exception {
+        given(orderRepository.findById(anyLong())).willReturn(Optional.empty());
+
+        Assertions.assertThrows(ResponseStatusException.class,
+                () -> {
+                    OrderResponse response = createOrderService.getOrderById(0L, "user");
+                });
+    }
+
+    @Test
+    public void givenNoOrderFoundForUser_whenGetOrderById_thenReturnException() throws Exception {
+        given(orderRepository.findById(anyLong())).willReturn(Optional.of(orderModel));
+
+        Assertions.assertThrows(ResponseStatusException.class,
+                () -> {
+                    OrderResponse response = createOrderService.getOrderById(orderModel.getCustomer()
+                            .getId(), null);
+                });
     }
 }
