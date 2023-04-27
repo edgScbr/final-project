@@ -52,7 +52,7 @@ public class AddItemServiceImpl implements AddItemService {
 
         } else {
             throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, "User does not have order with checkout status.");
+                    HttpStatus.UNPROCESSABLE_ENTITY, "User does not have order with checkout status.");
         }
     }
 

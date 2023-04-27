@@ -60,7 +60,7 @@ public class PurchaseServiceImpl implements PurchaseService {
                 productRepository.save(product);
             } else {
                 throw new ResponseStatusException(
-                        HttpStatus.BAD_REQUEST, "insufficient stock for product " + item.getProduct().getName());
+                        HttpStatus.UNPROCESSABLE_ENTITY, "insufficient stock for product " + item.getProduct().getName());
             }
         }
     }

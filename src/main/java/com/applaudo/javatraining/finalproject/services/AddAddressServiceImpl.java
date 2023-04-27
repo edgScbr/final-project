@@ -46,7 +46,7 @@ public class AddAddressServiceImpl implements AddAddressService {
                 return orderMapper.orderToOrderResponse(orderRepository.save(order));
             } else {
                 throw new ResponseStatusException(
-                        HttpStatus.BAD_REQUEST, "Address does not belong to user");
+                        HttpStatus.UNPROCESSABLE_ENTITY, "Address does not belong to user");
             }
         } else {
             throw new ResponseStatusException(
