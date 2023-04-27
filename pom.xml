@@ -136,7 +136,7 @@
                 <version>0.8.9</version>
                 <configuration>
                     <excludes>
-                        <!--                        <exclude>com/applaudo/**/mappers/*</exclude>-->
+                        <!-- <exclude>com/applaudo/**/mappers/*</exclude>-->
                         <exclude>**/config/*</exclude>
                     </excludes>
                 </configuration>

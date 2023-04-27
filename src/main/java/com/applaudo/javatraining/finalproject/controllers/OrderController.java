@@ -117,7 +117,7 @@ public class OrderController {
     })
     @PatchMapping("addPaymentMethod")
     @ResponseStatus(code = HttpStatus.OK)
-    public OrderResponse addPaymentMethod(@RequestBody PaymentMethodRequest request, Principal principal) {
+    public OrderResponse addPaymentMethod(@RequestBody @Valid PaymentMethodRequest request, Principal principal) {
         return paymentMethodService.addPaymentMethodToOrder(principal.getName(), request);
     }
 
