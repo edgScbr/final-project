@@ -1,6 +1,6 @@
 package com.applaudo.javatraining.finalproject.services;
 
-import com.applaudo.javatraining.finalproject.TestUtilities;
+import com.applaudo.javatraining.finalproject.UtilitiesTest;
 import com.applaudo.javatraining.finalproject.models.Customer;
 import com.applaudo.javatraining.finalproject.models.Item;
 import com.applaudo.javatraining.finalproject.models.Order;
@@ -24,7 +24,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 
-public class UtilityServiceImplTest extends TestUtilities {
+public class UtilityServiceImplTest extends UtilitiesTest {
 
     UtilityService utilityService;
 

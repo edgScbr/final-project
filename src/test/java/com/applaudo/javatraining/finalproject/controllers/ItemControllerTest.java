@@ -1,7 +1,6 @@
 package com.applaudo.javatraining.finalproject.controllers;
 
-import com.applaudo.javatraining.finalproject.TestUtilities;
-import com.applaudo.javatraining.finalproject.controllers.ItemController;
+import com.applaudo.javatraining.finalproject.UtilitiesTest;
 import com.applaudo.javatraining.finalproject.controllers.requests.OrderRequest;
 import com.applaudo.javatraining.finalproject.services.interfaces.AddItemService;
 import com.applaudo.javatraining.finalproject.services.interfaces.RemoveItemService;
@@ -32,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(ItemController.class)
 @ActiveProfiles(value = "test")
 @AutoConfigureMockMvc(addFilters = false)
-public class ItemControllerTest extends TestUtilities {
+public class ItemControllerTest extends UtilitiesTest {
 
     @Autowired
     ItemController itemController;

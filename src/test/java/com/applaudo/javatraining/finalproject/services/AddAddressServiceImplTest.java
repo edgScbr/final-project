@@ -1,6 +1,6 @@
 package com.applaudo.javatraining.finalproject.services;
 
-import com.applaudo.javatraining.finalproject.TestUtilities;
+import com.applaudo.javatraining.finalproject.UtilitiesTest;
 import com.applaudo.javatraining.finalproject.controllers.responses.OrderResponse;
 import com.applaudo.javatraining.finalproject.mappers.OrderMapper;
 import com.applaudo.javatraining.finalproject.models.Customer;
@@ -22,7 +22,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-public class AddAddressServiceImplTest extends TestUtilities {
+public class AddAddressServiceImplTest extends UtilitiesTest {
 
     AddAddressService addAddressService;
 
@@ -48,7 +48,12 @@ public class AddAddressServiceImplTest extends TestUtilities {
         OrderResponse response = addAddressService.addAddressToOrder(customerModel.getUserName(), addressRequest);
 
         assertThat(response).isNotNull();
-        assertThat(response.getDeliveryAddress()).isSameAs(addressResponse);
+        assertThat(response.getDeliveryAddress().getId()).isSameAs(addressResponse.getId());
+        assertThat(response.getDeliveryAddress().getStreetNumber()).isSameAs(addressResponse.getStreetNumber());
+        assertThat(response.getDeliveryAddress().getStreetName()).isSameAs(addressResponse.getStreetName());
+        assertThat(response.getDeliveryAddress().getCity()).isSameAs(addressResponse.getCity());
+        assertThat(response.getDeliveryAddress().getState()).isSameAs(addressResponse.getState());
+        assertThat(response.getDeliveryAddress().getZip()).isSameAs(addressResponse.getZip());
     }
 
     @Test

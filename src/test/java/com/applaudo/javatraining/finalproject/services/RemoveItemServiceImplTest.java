@@ -1,6 +1,6 @@
 package com.applaudo.javatraining.finalproject.services;
 
-import com.applaudo.javatraining.finalproject.TestUtilities;
+import com.applaudo.javatraining.finalproject.UtilitiesTest;
 import com.applaudo.javatraining.finalproject.models.Item;
 import com.applaudo.javatraining.finalproject.models.Order;
 import com.applaudo.javatraining.finalproject.models.enums.OrderStatus;
@@ -23,7 +23,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 
-public class RemoveItemServiceImplTest extends TestUtilities {
+public class RemoveItemServiceImplTest extends UtilitiesTest {
 
     RemoveItemService removeItemService;
 

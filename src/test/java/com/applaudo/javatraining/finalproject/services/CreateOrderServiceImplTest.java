@@ -1,6 +1,6 @@
 package com.applaudo.javatraining.finalproject.services;
 
-import com.applaudo.javatraining.finalproject.TestUtilities;
+import com.applaudo.javatraining.finalproject.UtilitiesTest;
 import com.applaudo.javatraining.finalproject.controllers.responses.OrderResponse;
 import com.applaudo.javatraining.finalproject.mappers.OrderMapper;
 import com.applaudo.javatraining.finalproject.models.Order;
@@ -24,7 +24,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 
-public class CreateOrderServiceImplTest extends TestUtilities {
+public class CreateOrderServiceImplTest extends UtilitiesTest {
 
 
     private final OrderRepository orderRepository = mock(OrderRepository.class);
