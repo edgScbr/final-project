@@ -127,7 +127,7 @@
                 <version>0.8.9</version>
                 <configuration>
                     <excludes>
-<!--                        <exclude>com/applaudo/**/mappers/*</exclude>-->
+                        <!--                        <exclude>com/applaudo/**/mappers/*</exclude>-->
                         <exclude>**/config/*</exclude>
                     </excludes>
                 </configuration>
@@ -144,7 +144,32 @@
                             <goal>report</goal>
                         </goals>
                     </execution>
+                    <execution>
+                        <id>jacoco-check</id>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <rule>
+                                    <element>PACKAGE</element>
+                                    <excludes>
+                                        <exclude>**/config/*</exclude>
+                                        <exclude>*Test</exclude>
+                                    </excludes>
+                                    <limits>
+                                        <limit>
+                                            <counter>LINE</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.80</minimum>
+                                        </limit>
+                                    </limits>
+                                </rule>
+                            </rules>
+                        </configuration>
+                    </execution>
                 </executions>
+
             </plugin>
 
         </plugins>
