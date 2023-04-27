@@ -54,7 +54,9 @@ public class CreateOrderServiceImplTest extends TestUtilities {
 
         OrderResponse response = createOrderService.createOrder(customerModel.getUserName(), orderRequest);
 
+        assertThat(response.getCustomer().getId()).isSameAs(customerModel.getId());
         assertThat(response.getCustomer().getFirstName()).isSameAs(customerModel.getFirstName());
+        assertThat(response.getCustomer().getLastName()).isSameAs(customerModel.getLastName());
         assertThat(response.getStatus()).isSameAs(OrderStatus.CHECKOUT);
         assertThat(response.getItems()).hasSize(1);
         assertThat(response).isNotNull();

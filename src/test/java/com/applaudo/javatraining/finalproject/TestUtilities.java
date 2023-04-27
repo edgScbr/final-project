@@ -5,15 +5,26 @@ import com.applaudo.javatraining.finalproject.controllers.requests.AddressReques
 import com.applaudo.javatraining.finalproject.controllers.requests.OrderRequest;
 import com.applaudo.javatraining.finalproject.controllers.requests.PaymentMethodRequest;
 import com.applaudo.javatraining.finalproject.controllers.responses.*;
+import com.applaudo.javatraining.finalproject.mappers.ProductMapper;
+import com.applaudo.javatraining.finalproject.mappers.ProductMapperImpl;
 import com.applaudo.javatraining.finalproject.models.*;
 import com.applaudo.javatraining.finalproject.models.enums.DeliveryStatus;
 import com.applaudo.javatraining.finalproject.models.enums.OrderStatus;
 import com.applaudo.javatraining.finalproject.models.enums.PaymentOption;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 
 public class TestUtilities {
+
+    ProductMapper productMapper = new ProductMapperImpl();
 
     @MockBean
     JwtAuthConverterProperties jwtAuthConverterProperties;
@@ -23,7 +34,7 @@ public class TestUtilities {
 
 
     public AddressResponse addressResponse = AddressResponse.builder()
-            .id(getRandomLongRange())
+            .id(1L)
             .streetNumber(1)
             .streetName("Main st")
             .city("Los Gatos")
@@ -38,7 +49,7 @@ public class TestUtilities {
             new PaymentMethodResponse(getRandomLongRange(), PaymentOption.CREDIT_CARD);
 
     public CustomerResponse customerResponse = CustomerResponse.builder()
-            .id(getRandomLongRange())
+            .id(1L)
             .firstName("John")
             .lastName("Doe")
             .userName("user1")
@@ -46,12 +57,11 @@ public class TestUtilities {
             .build();
 
 
-    public ProductItemResponse productItemResponse = ProductItemResponse.builder()
-            .id(getRandomLongRange())
-            .name("Keyboard")
-            .description("Mechanical Keyboard")
-            .price(15.50)
-            .build();
+    public Product productModel = new Product(1L, "Keyboard", "Mechanical Keyboard",
+            15.50, 25);
+
+    public ProductItemResponse productItemResponse = productMapper
+            .productToProductItemResponse(productModel);
 
     public ItemResponse itemResponse = ItemResponse.builder()
             .product(productItemResponse)
@@ -75,7 +85,7 @@ public class TestUtilities {
 
     public Address addressModel =
             new Address(1L, new Customer(), 1, "Main st",
-                    "Los Gatos", "CA", 12345);
+                    "Los Gatos", "CA", 95030);
 
     public AddressRequest addressRequest = new AddressRequest(1L);
 
@@ -84,8 +94,7 @@ public class TestUtilities {
             "jd@gmail.com", new HashSet<>(Collections.singletonList(addressModel)),
             new HashSet<>(Collections.singletonList(paymentMethod)));
 
-    public Product productModel = new Product(1L, "Keyboard", "Mechanical Keyboard",
-            15.50, 25);
+
 
     public ItemKey itemKey = new ItemKey(1L, 1L);
     public Item itemModel = new Item(itemKey, productModel, null, 5);

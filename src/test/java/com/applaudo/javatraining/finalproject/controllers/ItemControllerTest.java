@@ -62,7 +62,12 @@ public class ItemControllerTest extends TestUtilities {
                         .characterEncoding("utf-8"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.customer.userName", is(orderResponse.getCustomer().getUserName())));
+                .andExpect(jsonPath("$.items[:1].product.name")
+                        .value(itemResponse.getProduct().getName()))
+                .andExpect(jsonPath("$.items[:1].product.description")
+                        .value(itemResponse.getProduct().getDescription()))
+                .andExpect(jsonPath("$.items[:1].product.price")
+                        .value(itemResponse.getProduct().getPrice()));
     }
 
     @Test

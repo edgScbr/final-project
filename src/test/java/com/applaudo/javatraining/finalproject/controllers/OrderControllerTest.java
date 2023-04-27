@@ -68,7 +68,11 @@ public class OrderControllerTest extends TestUtilities {
                         .characterEncoding("utf-8"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.customer.userName", is(orderResponse.getCustomer().getUserName())));
+                .andExpect(jsonPath("$.customer.userName", is(customerModel.getUserName())))
+                .andExpect(jsonPath("$.customer.firstName", is(customerModel.getFirstName())))
+                .andExpect(jsonPath("$.customer.lastName", is(customerModel.getLastName())))
+                .andExpect(jsonPath("$.customer.email", is(customerModel.getEmail())))
+                .andExpect(jsonPath("$.customer.id", is(customerModel.getId()), Long.class));
     }
 
     @Test
@@ -90,7 +94,13 @@ public class OrderControllerTest extends TestUtilities {
                         .content(new ObjectMapper().writeValueAsString(addressRequest))
                         .characterEncoding("utf-8"))
                 .andDo(MockMvcResultHandlers.print())
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.deliveryAddress.id", is(addressModel.getId()), Long.class))
+                .andExpect(jsonPath("$.deliveryAddress.streetNumber", is(addressModel.getStreetNumber())))
+                .andExpect(jsonPath("$.deliveryAddress.streetName", is(addressModel.getStreetName())))
+                .andExpect(jsonPath("$.deliveryAddress.city", is(addressModel.getCity())))
+                .andExpect(jsonPath("$.deliveryAddress.state", is(addressModel.getState())))
+                .andExpect(jsonPath("$.deliveryAddress.zip", is(addressModel.getZip())));
     }
 
     @Test
@@ -112,7 +122,10 @@ public class OrderControllerTest extends TestUtilities {
                         .content(new ObjectMapper().writeValueAsString(paymentMethodRequest))
                         .characterEncoding("utf-8"))
                 .andDo(MockMvcResultHandlers.print())
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.paymentMethod.id", is(paymentMethod.getId()), Long.class))
+                .andExpect(jsonPath("$.paymentMethod.paymentOption",
+                        is(paymentMethod.getPaymentOption().name())));
     }
 
 }
