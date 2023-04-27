@@ -3,6 +3,9 @@ package com.applaudo.javatraining.finalproject.controllers;
 import com.applaudo.javatraining.finalproject.UtilitiesTest;
 import com.applaudo.javatraining.finalproject.controllers.requests.AddressRequest;
 import com.applaudo.javatraining.finalproject.controllers.requests.OrderRequest;
+import com.applaudo.javatraining.finalproject.controllers.responses.OrderResponse;
+import com.applaudo.javatraining.finalproject.models.enums.DeliveryStatus;
+import com.applaudo.javatraining.finalproject.models.enums.OrderStatus;
 import com.applaudo.javatraining.finalproject.services.interfaces.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,12 +22,10 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import java.security.Principal;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -127,4 +128,35 @@ public class OrderControllerTest extends UtilitiesTest {
                         is(paymentMethod.getPaymentOption().name())));
     }
 
+    @Test
+    public void givenUserName_whenPatchOrder_thenReturnUpdatedOrder() throws Exception {
+        OrderResponse response = orderResponse;
+        response.setStatus(OrderStatus.PAID);
+        response.setDeliveryStatus(DeliveryStatus.SHIPPED);
+
+        given(purchaseService.proceedToPurchase(anyString())).willReturn(response);
+
+        mockMvc.perform(patch("/store/orders/purchase").contentType(MediaType.APPLICATION_JSON)
+                        .principal(mockPrincipal)
+                        .characterEncoding("utf-8"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status", is(response.getStatus().name())))
+                .andExpect(jsonPath("$.deliveryStatus", is(response.getDeliveryStatus().name())));
+    }
+
+    @Test
+    public void givenId_whenGetOrderById_thenReturnOrder() throws Exception {
+
+        given(createOrderService.getOrderById(anyLong(), anyString())).willReturn(orderResponse);
+
+        mockMvc.perform(get("/store/orders/{id}", String.valueOf(1L))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .principal(mockPrincipal)
+                        .characterEncoding("uft-8"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.customer.userName", is(orderResponse.getCustomer().getUserName())))
+                .andExpect(jsonPath("$.customer.firstName", is(orderResponse.getCustomer().getFirstName())))
+                .andExpect(jsonPath("$.customer.lastName", is(orderResponse.getCustomer().getLastName())))
+                .andExpect(jsonPath("$.status", is(orderResponse.getStatus().name())));
+    }
 }

@@ -26,4 +26,11 @@ public class OrderResponse {
     private PaymentMethod paymentMethod;
     private Double total;
 
+    public void setStatus(OrderStatus status) {
+        this.status = status;
+    }
+
+    public void setDeliveryStatus(DeliveryStatus deliveryStatus) {
+        this.deliveryStatus = deliveryStatus;
+    }
 }
