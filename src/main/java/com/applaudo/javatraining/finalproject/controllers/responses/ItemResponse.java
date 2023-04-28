@@ -1,7 +1,9 @@
 package com.applaudo.javatraining.finalproject.controllers.responses;
 
-import com.applaudo.javatraining.finalproject.models.Product;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 
 @Getter

@@ -1,13 +1,12 @@
 package com.applaudo.javatraining.finalproject.controllers.responses;
 
-import com.applaudo.javatraining.finalproject.controllers.requests.AddressRequest;
-import com.applaudo.javatraining.finalproject.models.Address;
-import com.applaudo.javatraining.finalproject.models.Customer;
-import com.applaudo.javatraining.finalproject.models.Item;
 import com.applaudo.javatraining.finalproject.models.PaymentMethod;
 import com.applaudo.javatraining.finalproject.models.enums.DeliveryStatus;
 import com.applaudo.javatraining.finalproject.models.enums.OrderStatus;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
