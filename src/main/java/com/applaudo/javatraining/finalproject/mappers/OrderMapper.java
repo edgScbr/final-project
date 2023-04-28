@@ -18,7 +18,7 @@ public interface OrderMapper {
 
 
     @Named("orderTotal")
-    public static double orderTotal(Order order){
+    static double orderTotal(Order order){
         double total = 0.00;
         for(Item item: order.getItems()){
             total += item.getQuantity() * item.getProduct().getPrice();

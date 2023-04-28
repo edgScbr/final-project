@@ -8,18 +8,17 @@ import com.applaudo.javatraining.finalproject.models.Product;
 import com.applaudo.javatraining.finalproject.models.enums.OrderStatus;
 
 import java.util.Optional;
-import java.util.Set;
 
 public interface UtilityService {
 
-    public Product findProduct(OrderRequest request);
+    Product findProduct(OrderRequest request);
 
-    public Customer findCustomer(String userName);
+    Customer findCustomer(String userName);
 
-    public Order getOrderById(long id);
+    Order getOrderById(long id);
 
-    public Optional<Order> getOrderByUserNameAndStatus(String userName, OrderStatus status);
+    Optional<Order> getOrderByUserNameAndStatus(String userName, OrderStatus status);
 
-    public Optional<Item> verifyItemAlreadyAdded(Long productId, Order order);
+    Optional<Item> verifyItemAlreadyAdded(Long productId, Order order);
 
 }
