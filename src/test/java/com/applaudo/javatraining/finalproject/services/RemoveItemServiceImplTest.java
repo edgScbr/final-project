@@ -8,6 +8,7 @@ import com.applaudo.javatraining.finalproject.repositories.ItemRepository;
 import com.applaudo.javatraining.finalproject.repositories.OrderRepository;
 import com.applaudo.javatraining.finalproject.services.interfaces.RemoveItemService;
 import com.applaudo.javatraining.finalproject.services.interfaces.UtilityService;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -61,7 +62,7 @@ public class RemoveItemServiceImplTest extends UtilitiesTest {
     public void givenCheckoutNotFound_whenRemoveItem_thenThrowException() throws Exception {
         given(utilityService.getOrderByUserNameAndStatus(anyString(), any())).willReturn(Optional.empty());
 
-        Assertions.assertThrows(ResponseStatusException.class,
+        Assertions.assertThrows(EntityNotFoundException.class,
                 () -> {
                     removeItemService.removeItem(customerModel.getUserName(), productModel.getId());
                 });
@@ -72,7 +73,7 @@ public class RemoveItemServiceImplTest extends UtilitiesTest {
         given(utilityService.getOrderByUserNameAndStatus(anyString(), any())).willReturn(Optional.of(orderModel));
         given(utilityService.verifyItemAlreadyAdded(anyLong(), any())).willReturn(Optional.empty());
 
-        Assertions.assertThrows(ResponseStatusException.class,
+        Assertions.assertThrows(EntityNotFoundException.class,
                 () -> {
                     removeItemService.removeItem(customerModel.getUserName(), productModel.getId());
                 });

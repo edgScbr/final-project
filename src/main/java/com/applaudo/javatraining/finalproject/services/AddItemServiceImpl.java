@@ -10,6 +10,7 @@ import com.applaudo.javatraining.finalproject.models.enums.OrderStatus;
 import com.applaudo.javatraining.finalproject.repositories.ItemRepository;
 import com.applaudo.javatraining.finalproject.services.interfaces.AddItemService;
 import com.applaudo.javatraining.finalproject.services.interfaces.UtilityService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -51,8 +52,8 @@ public class AddItemServiceImpl implements AddItemService {
             return orderMapper.orderToOrderResponse(order);
 
         } else {
-            throw new ResponseStatusException(
-                    HttpStatus.UNPROCESSABLE_ENTITY, "User does not have order with checkout status.");
+            throw new EntityNotFoundException(
+                    "User does not have order with checkout status.");
         }
     }
 

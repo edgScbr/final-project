@@ -1,6 +1,7 @@
 package com.applaudo.javatraining.finalproject.services;
 
 import com.applaudo.javatraining.finalproject.UtilitiesTest;
+import com.applaudo.javatraining.finalproject.controllers.errors.custom.BadRequestResponseStatusException;
 import com.applaudo.javatraining.finalproject.controllers.responses.OrderResponse;
 import com.applaudo.javatraining.finalproject.mappers.OrderMapper;
 import com.applaudo.javatraining.finalproject.models.Order;
@@ -74,7 +75,7 @@ public class PurchaseServiceImplTest extends UtilitiesTest {
         invalid.setPaymentMethod(null);
         invalid.setDeliveryAddress(null);
 
-        Assertions.assertThrows(ResponseStatusException.class,
+        Assertions.assertThrows(BadRequestResponseStatusException.class,
                 () -> {
                     purchaseService.proceedToPurchase(invalid.getCustomer().getUserName());
                 });

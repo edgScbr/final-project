@@ -7,6 +7,7 @@ import com.applaudo.javatraining.finalproject.repositories.ItemRepository;
 import com.applaudo.javatraining.finalproject.repositories.OrderRepository;
 import com.applaudo.javatraining.finalproject.services.interfaces.RemoveItemService;
 import com.applaudo.javatraining.finalproject.services.interfaces.UtilityService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -41,12 +42,10 @@ public class RemoveItemServiceImpl implements RemoveItemService {
                     orderRepository.save(order);
                 }
             } else {
-                throw new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "item not found");
+                throw new EntityNotFoundException("item not found");
             }
         } else {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "checkout not found for current user");
+            throw new EntityNotFoundException("checkout not found for current user");
         }
     }
 

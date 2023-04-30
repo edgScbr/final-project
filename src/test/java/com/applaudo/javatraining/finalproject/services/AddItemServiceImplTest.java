@@ -1,6 +1,7 @@
 package com.applaudo.javatraining.finalproject.services;
 
 import com.applaudo.javatraining.finalproject.UtilitiesTest;
+import com.applaudo.javatraining.finalproject.controllers.errors.custom.BadRequestResponseStatusException;
 import com.applaudo.javatraining.finalproject.controllers.responses.OrderResponse;
 import com.applaudo.javatraining.finalproject.mappers.OrderMapper;
 import com.applaudo.javatraining.finalproject.models.Item;
@@ -8,6 +9,7 @@ import com.applaudo.javatraining.finalproject.models.enums.OrderStatus;
 import com.applaudo.javatraining.finalproject.repositories.ItemRepository;
 import com.applaudo.javatraining.finalproject.services.interfaces.AddItemService;
 import com.applaudo.javatraining.finalproject.services.interfaces.UtilityService;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -72,7 +74,7 @@ public class AddItemServiceImplTest extends UtilitiesTest {
     public void givenOrderWithNoCheckoutStatus_whenAddItem_thenThrowException() throws Exception {
         given(utilityService.getOrderByUserNameAndStatus(anyString(), any())).willReturn(Optional.empty());
 
-        Assertions.assertThrows(ResponseStatusException.class,
+        Assertions.assertThrows(EntityNotFoundException.class,
                 () -> {
                     OrderResponse response = addItemService.addItems(customerModel.getUserName(), orderRequest);
                 });

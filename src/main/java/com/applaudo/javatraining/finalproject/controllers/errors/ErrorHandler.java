@@ -1,5 +1,6 @@
 package com.applaudo.javatraining.finalproject.controllers.errors;
 
+import com.applaudo.javatraining.finalproject.controllers.errors.custom.BadRequestResponseStatusException;
 import jakarta.persistence.EntityNotFoundException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
@@ -51,10 +52,19 @@ public class ErrorHandler {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(HttpMessageNotReadableException.class)
+    @ExceptionHandler({HttpMessageNotReadableException.class})
     public Map<String, String> handleMessageNotReadable(HttpMessageNotReadableException ex) {
         Map<String, String> erroMap = new HashMap<>();
         erroMap.put("error message", ex.getMessage());
         return erroMap;
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler({BadRequestResponseStatusException.class})
+    public Map<String, String> handleMessageBadRequest(BadRequestResponseStatusException ex) {
+        Map<String, String> erroMap = new HashMap<>();
+        erroMap.put("error message", ex.getMessage());
+        return erroMap;
+    }
+
 }

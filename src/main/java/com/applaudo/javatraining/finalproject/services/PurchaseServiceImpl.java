@@ -1,5 +1,7 @@
 package com.applaudo.javatraining.finalproject.services;
 
+import com.applaudo.javatraining.finalproject.controllers.errors.ErrorHandler;
+import com.applaudo.javatraining.finalproject.controllers.errors.custom.BadRequestResponseStatusException;
 import com.applaudo.javatraining.finalproject.controllers.responses.OrderResponse;
 import com.applaudo.javatraining.finalproject.mappers.OrderMapper;
 import com.applaudo.javatraining.finalproject.models.Item;
@@ -10,6 +12,7 @@ import com.applaudo.javatraining.finalproject.models.enums.OrderStatus;
 import com.applaudo.javatraining.finalproject.repositories.OrderRepository;
 import com.applaudo.javatraining.finalproject.repositories.ProductRepository;
 import com.applaudo.javatraining.finalproject.services.interfaces.PurchaseService;
+import jakarta.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -41,8 +44,7 @@ public class PurchaseServiceImpl implements PurchaseService {
                 updateStock(order);
                 return orderMapper.orderToOrderResponse(orderRepository.save(order));
             } else {
-                throw new ResponseStatusException(
-                        HttpStatus.BAD_REQUEST, "payment method and delivery address must be set up for current order");
+                throw new BadRequestResponseStatusException("payment method and delivery address must be set up for current order");
             }
         } else {
             throw new ResponseStatusException(

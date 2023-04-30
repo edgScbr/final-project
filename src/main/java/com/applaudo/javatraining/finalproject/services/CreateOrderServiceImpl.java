@@ -13,6 +13,7 @@ import com.applaudo.javatraining.finalproject.repositories.ItemRepository;
 import com.applaudo.javatraining.finalproject.repositories.OrderRepository;
 import com.applaudo.javatraining.finalproject.services.interfaces.CreateOrderService;
 import com.applaudo.javatraining.finalproject.services.interfaces.UtilityService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -70,8 +71,8 @@ public class CreateOrderServiceImpl implements CreateOrderService {
             if (order.getCustomer().getUserName().equals(userName)) {
                 return orderMapper.orderToOrderResponse(order);
             } else {
-                throw new ResponseStatusException(
-                        HttpStatus.BAD_REQUEST, "order does not exists for user: " + userName);
+                throw new EntityNotFoundException(
+                        "order not found for current user: " + userName);
             }
         } else {
             throw new ResponseStatusException(

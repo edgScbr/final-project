@@ -9,6 +9,7 @@ import com.applaudo.javatraining.finalproject.repositories.ItemRepository;
 import com.applaudo.javatraining.finalproject.repositories.OrderRepository;
 import com.applaudo.javatraining.finalproject.services.interfaces.CreateOrderService;
 import com.applaudo.javatraining.finalproject.services.interfaces.UtilityService;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -102,7 +103,7 @@ public class CreateOrderServiceImplTest extends UtilitiesTest {
     public void givenNoOrderFoundForUser_whenGetOrderById_thenReturnException() throws Exception {
         given(orderRepository.findById(anyLong())).willReturn(Optional.of(orderModel));
 
-        Assertions.assertThrows(ResponseStatusException.class,
+        Assertions.assertThrows(EntityNotFoundException.class,
                 () -> {
                     OrderResponse response = createOrderService.getOrderById(orderModel.getCustomer()
                             .getId(), null);
