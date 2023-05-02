@@ -1,0 +1,59 @@
+version: '3.7'
+services:
+  keycloak:
+    image: jboss/keycloak
+    hostname: keycloak
+    container_name: keycloak
+    restart: always
+    environment:
+      DB_VENDOR: POSTGRES
+      DB_ADDR: postgres-keycloak
+      DB_DATABASE: keycloak
+      DB_USER: $POSTGRES_DB_USER
+      DB_SCHEMA: public
+      DB_PASSWORD: $POSTGRES_DB_PASSWORD
+      PROXY_ADDRESS_FORWARDING: "true"
+      OAUTH2_ISSUER: http://localhost:8081/auth/realms/SpringBootKeycloak
+    volumes:
+      - keycloak:/var/lib/keycloak/data
+    ports:
+      - "8081:8081"
+    command:
+      - "-b 0.0.0.0"
+      - "-Djboss.http.port=8081"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - postgres-keycloak
+
+  postgres-keycloak:
+    image: postgres:14.1-alpine
+    container_name: postgres-keycloak
+    volumes:
+      - pgdata-keycloak:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: $POSTGRES_DB_USER
+      POSTGRES_PASSWORD: $POSTGRES_DB_PASSWORD
+
+  mysql-db:
+    container_name: mysql-db
+    image: mysql:8.0
+    cap_add:
+      - SYS_NICE
+    restart: always
+    environment:
+      - $MYSQL_DATABASE
+      - $MYSQL_ROOT_PASSWORD
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql-db:/var/lib/mysql
+
+
+volumes:
+  keycloak:
+  pgdata-keycloak:
+    driver: local
+  mysql-db:
+    driver: local
