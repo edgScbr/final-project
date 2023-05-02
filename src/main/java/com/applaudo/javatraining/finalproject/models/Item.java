@@ -2,6 +2,7 @@ package com.applaudo.javatraining.finalproject.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
@@ -21,18 +22,12 @@ public class Item implements Serializable {
     @ManyToOne
     @MapsId("productId")
     @JoinColumn(name = "product_id")
+    @Getter
     private Product product;
     @ManyToOne
     @MapsId("orderId")
     @JoinColumn(name = "order_id")
     private Order order;
+    @Getter
     private Integer quantity;
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
 }

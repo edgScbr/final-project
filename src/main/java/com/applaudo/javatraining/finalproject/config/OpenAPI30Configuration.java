@@ -13,14 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 
-@OpenAPIDefinition(
-        info = @Info(title = "Store API", version = "1.0",
-                contact = @Contact(name = "Store", email = "store@applaudostudios.com", url = "applaudo.com"),
-                license = @License(name = "Apache 2.0", url = "https://www.apache.org/licenses/LICENSE-2.0"), termsOfService = "${tos.uri}",
-                description = "store API final project"),
-        servers = {
-                @Server(url = "http://localhost:8080", description = "Development")
-        })
+
 @Configuration
 public class OpenAPI30Configuration {
     /**
@@ -42,7 +35,8 @@ public class OpenAPI30Configuration {
                                 .type(SecurityScheme.Type.HTTP)
                                 .scheme("bearer")
                                 .description(
-                                        "Provide the JWT token. JWT token can be obtained from the Login API. For testing, use the credentials <strong>john/password</strong>")
+                                        "Provide the JWT token. JWT token can be obtained from the Login API. " +
+                                                "For testing, use the credentials <strong>john/password</strong>")
                                 .bearerFormat("JWT")));
         //@formatter:on
     }

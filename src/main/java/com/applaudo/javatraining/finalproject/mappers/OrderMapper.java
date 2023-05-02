@@ -8,19 +8,21 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
+import java.util.Set;
+
 @Mapper(componentModel = "spring",
         injectionStrategy = InjectionStrategy.CONSTRUCTOR,
         uses = {CustomerMapper.class, ItemMapper.class, AddressMapper.class, PaymentMethodMapper.class})
 public interface OrderMapper {
 
-    @Mapping(source = "order", target = "total", qualifiedByName = "orderTotal")
+    @Mapping(source = "items", target = "total", qualifiedByName = "orderTotal")
     OrderResponse orderToOrderResponse(Order order);
 
 
     @Named("orderTotal")
-    static double orderTotal(Order order){
+    static double orderTotal(Set<Item> items){
         double total = 0.00;
-        for(Item item: order.getItems()){
+        for(Item item: items){
             total += item.getQuantity() * item.getProduct().getPrice();
         }
         return total;

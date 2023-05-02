@@ -9,11 +9,9 @@ services:
       DB_VENDOR: POSTGRES
       DB_ADDR: postgres-keycloak
       DB_DATABASE: keycloak
-      DB_USER: keycloak
+      DB_USER: $POSTGRES_DB_USER
       DB_SCHEMA: public
-      DB_PASSWORD: password
-#      KEYCLOAK_USER: admin
-#      KEYCLOAK_PASSWORD: password
+      DB_PASSWORD: $POSTGRES_DB_PASSWORD
       PROXY_ADDRESS_FORWARDING: "true"
       OAUTH2_ISSUER: http://localhost:8081/auth/realms/SpringBootKeycloak
     volumes:
@@ -35,8 +33,8 @@ services:
       - pgdata-keycloak:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: keycloak
-      POSTGRES_USER: keycloak
-      POSTGRES_PASSWORD: password
+      POSTGRES_USER: $POSTGRES_DB_USER
+      POSTGRES_PASSWORD: $POSTGRES_DB_PASSWORD
 
   mysql-db:
     container_name: mysql-db
@@ -45,8 +43,8 @@ services:
       - SYS_NICE
     restart: always
     environment:
-      - MYSQL_DATABASE=store
-      - MYSQL_ROOT_PASSWORD=password
+      - $MYSQL_DATABASE
+      - $MYSQL_ROOT_PASSWORD
     ports:
       - '3306:3306'
     volumes:

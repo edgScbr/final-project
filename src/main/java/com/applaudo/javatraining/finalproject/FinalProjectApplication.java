@@ -8,8 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @OpenAPIDefinition
 public class FinalProjectApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(FinalProjectApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(FinalProjectApplication.class, args);
+    }
 
 }
